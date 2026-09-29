@@ -1,0 +1,18 @@
+# guestbook/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: guestbook-ui}
+  template:
+    metadata:
+      labels: {app: guestbook-ui}
+    spec:
+      containers:
+      - name: guestbook-ui
+        image: gcr.io/heptio-images/ks-guestbook-demo:0.2
+        ports:
+        - containerPort: 80

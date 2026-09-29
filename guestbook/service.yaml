@@ -1,0 +1,9 @@
+# guestbook/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-ui
+spec:
+  selector: {app: guestbook-ui}
+  ports:
+  - port: 80

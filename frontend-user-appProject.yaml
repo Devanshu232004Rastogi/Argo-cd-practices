@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: experiment-project
+  namespace: argocd
+spec:
+  description: Project for RBAC experiments
+  
+  # 1. Source Repos: What Git repos can apps in this project pull from?
+  sourceRepos:
+    - 'https://github.com/duniyakapapa66-stack/argo-sep-28.git'
+  
+  # 2. Destinations: Which K8s clusters and namespaces can this project deploy to?
+  destinations:
+    - namespace: 'experiment-ns'
+      server: https://kubernetes.default.svc
+      
+  # 3. Whitelist: What Kubernetes resources are allowed to be deployed? (e.g., block ClusterRoles)
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  # 4. Project RBAC: Define local roles and bind them
+  roles:
+    - name: experiment-admin
+      description: Full admin rights for this specific project
+      policies:
+        # p, <role-name>, <resource>, <action>, <object>, <effect>
+        - p, proj:experiment-project:experiment-admin, applications, *, experiment-project/*, allow
+        - p, proj:experiment-project:experiment-admin, applications, sync, experiment-project/*, deny
+      groups:
+        - frontend # Binds the local 'testuser' to this project role
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: experiment-app
+  namespace: argocd
+spec:
+  project: experiment-project
+  source:
+    repoURL: https://github.com/duniyakapapa66-stack/argo-sep-28.git
+    targetRevision: main
+    path: guestbook
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: experiment-ns
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

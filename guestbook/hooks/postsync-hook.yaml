@@ -17,5 +17,5 @@ spec:
         - -c
         - |
           echo "Hitting guestbook-ui service..."
-          curl -sf --max-time 5 http://guestbook-ui.guestbook.svc.cluster.local:80 || exit 1
+          curl -sf --max-time 5 http://guestbook-ui.guestbook.svc.cluster.local:90 || exit 1
           echo "Smoke test passed"

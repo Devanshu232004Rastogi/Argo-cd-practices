@@ -1,0 +1,24 @@
+# hooks/syncfail-notify.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guestbook-sync-fail-notify
+  annotations:
+    argocd.argoproj.io/hook: SyncFail
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: notify
+        image: curlimages/curl:8.10.1
+        command:
+        - sh
+        - -c
+        - |
+          echo "Sync failed - would normally POST to Slack webhook here"
+          # curl -X POST -H 'Content-type: application/json' \
+          #   --data '{"text":"guestbook sync FAILED"}' \
+          #   $SLACK_WEBHOOK_URL

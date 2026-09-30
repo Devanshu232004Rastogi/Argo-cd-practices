@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guestbook-smoke-test
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: smoke-test
+        image: curlimages/curl:8.10.1
+        command:
+        - sh
+        - -c
+        - |
+          echo "Hitting guestbook-ui service..."
+          curl -sf --max-time 5 http://guestbook-ui.guestbook.svc.cluster.local:80 || exit 1
+          echo "Smoke test passed"

@@ -8,8 +8,7 @@ spec:
   
   # 1. Source Repos: What Git repos can apps in this project pull from?
   sourceRepos:
-    - 'https://github.com/duniyakapapa66-stack/argo-sep-28.git'
-  
+    - "https://github.com/Devanshu232004Rastogi/Argo-cd-practices.git" 
   # 2. Destinations: Which K8s clusters and namespaces can this project deploy to?
   destinations:
     - namespace: 'experiment-ns'

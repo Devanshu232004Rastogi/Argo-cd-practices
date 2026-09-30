@@ -39,7 +39,7 @@ metadata:
 spec:
   project: experiment-project
   source:
-    repoURL: https://github.com/duniyakapapa66-stack/argo-sep-28.git
+    repoURL: https://github.com/Devanshu232004Rastogi/Argo-cd-practices.git
     targetRevision: main
     path: guestbook
   destination:

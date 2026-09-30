@@ -4,7 +4,6 @@ metadata:
   name: guestbook-db-migrate
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
     argocd.argoproj.io/sync-wave: "-1"  
 spec:
   backoffLimit: 2
@@ -19,5 +18,5 @@ spec:
         - -c
         - |
           echo "Simulating migration..."
-          sleep 5
+          sleep 20
           echo "Migration complete"
